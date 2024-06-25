@@ -1,3 +1,4 @@
+
 const api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
 
 async function getISS() {
@@ -5,9 +6,16 @@ async function getISS() {
     const data = await response.json();
     
     const {latitude, longitude} = data;
-    document.getElementById('lat').textContent = latitude;
-    document.getElementById('lon').textContent = longitude;
+
+    marker.setLatLng([latitude, longitude]);
+    map.setView([latitude, longitude], 2);
+
+    document.getElementById('lat').textContent = latitude.toFixed(2);
+    document.getElementById('lon').textContent = longitude.toFixed(2);
     console.log(latitude);
     console.log(longitude);
 }
 getISS();
+
+setInterval(getISS, 1000);
+

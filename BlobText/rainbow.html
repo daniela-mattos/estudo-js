@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+<body>
+    <H1>Fetch API </H1>
+    <p>Using <strong>async function:</strong>  Blob Whith Array and Text<p>
+
+    <img src="" id="rainbow" height="480">
+    <img src="" id="licor" width="480">
+
+    <p id="quote"></p>
+
+    <script>
+        console.log('About to fetch a rainbow');
+        const filenames = [
+            'rainbow.jpg',
+            'licor.jpg'
+        ];
+
+        catchRainbow(filenames)
+            .then(response => {
+                console.log('yay');
+            })
+            .catch(error => {
+                console.log('error!');
+                console.error(error);
+            });
+
+        async function catchRainbow(filenames) {
+            for (let filename of filenames) {
+                const response = await fetch(filename);
+                const blob = await response.blob();
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                img.height = '400';
+                document.body.append(img);
+            }
+    
+        }
+
+        catchText()
+        .then(quote => {
+            document.getElementById('quote').innerText = quote;
+            console.log('beautiful');
+        })
+        .catch(Error => {
+            console.log('error"');
+            console.error(error);
+        })
+
+        async function catchText() {
+            const responseTxt = await fetch('licor.txt');
+            return await responseTxt.text();
+        
+        }
+
+    </script>
+</body>
+</html>

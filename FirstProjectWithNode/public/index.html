@@ -1,58 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        #map { 
-            height: 400px; 
-        }
-    </style>
-    <title>Data Self App</title>
-</head>
-<body>
-    <h1>Data Self App</h1>
-    <p>Hello!</p>
-
-    <p>
-        latitude: <span id="latitude"></span>º<br> 
-        longitude: <span id="longitude"></span>º<br>
-    </p>
-
-    
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Data Selfie App</title>
+  </head>
+  <body>
     <script>
-        
-        if ("geolocation" in navigator) {
-        
-            console.log('geolocation is available')
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                console.log(position);
-                const lat = position.coords.latitude;
-                const lon = position.coords.latitude;
+      if ("geolocation" in navigator) {
+        console.log("geolocation available");
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          document.getElementById("latitude").textContent = lat;
+          document.getElementById("longitude").textContent = lon;
+          // console.log(position);
 
-                document.getElementById('latitude').textContent = lat;
-                document.getElementById('longitude').textContent = lon;
-
-                const data = { lat, lon };
-                const options = {
-                    method: "POST",
-                    Headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                };
-                const response = await fetch("/api", options);
-                const dataJson = await response.json();
-                console.log(dataJson);
-
-            });
-
-        } else {
-            console.log('IS NOT available');
-        }
-
+          const data = { lat, lon };
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          };
+          const response = await fetch("/api", options);
+          const json = await response.json();
+          console.log(json);
+        });
+      } else {
+        console.log("geolocation not available");
+      }
     </script>
-    
-</body>
+
+    <h1>Data Selfie App</h1>
+    <p>
+      latitude: <span id="latitude"></span>&deg;<br />
+      longitude: <span id="longitude"></span>&deg;
+    </p>
+  </body>
 </html>

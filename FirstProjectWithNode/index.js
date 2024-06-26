@@ -3,7 +3,14 @@ const app = express();
 
 app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
+app.use(express.json({ limit: '1mb' }));
 
-app.post('/api', (request, response) => {
-    console.log(request);
+app.post('/api', (req, res) => {
+    console.log(req.body);
+    const data = req.body;
+    res.json({
+        status: 'success',
+        latitude: data.latitude,
+        longitude: data.longitude
+    });
 });
